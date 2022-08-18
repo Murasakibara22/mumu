@@ -67,7 +67,11 @@ class ParentController extends Controller
      */
     public function show(Parents $parents)
     {
-        //
+        $parent = Parents::find($parents);
+
+        return [
+            'parent' => $parent
+        ];
     }
 
     /**
