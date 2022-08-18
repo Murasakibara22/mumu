@@ -14,7 +14,11 @@ class ParentController extends Controller
      */
     public function index()
     {
-        //
+        $parent = Parents::all();
+
+        return [
+            'parent' => $parent 
+        ];
     }
 
     /**
