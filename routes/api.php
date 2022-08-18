@@ -20,5 +20,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('/parents', [ParentController::class, 'store']);
-Route::get('/parents', [ParentsController::class, 'index']);
-Route::get('/parents/{id}', [ParentsController::class, 'show']);
+Route::get('/parents', [ParentController::class, 'index']);
+Route::get('/parents/{id}', [ParentController::class, 'show']);
+Route::put('/parents/{id}',[ParentController::class, 'updateParents']);
+Route::delete('/parents/{id}',[ParentController::class, 'deleteParents']);
+
+
+Route::post('/eleves', [ElevesController::class, 'newEleve']);
+Route::get('/eleves', [ElevesController::class, 'listAll']);
+Route::get('/eleves/{id}', [ElevesController::class, 'listOne']);
+Route::put('/eleves/{id}', [ElevesController::class, 'updateEleves']);
+Route::delete('/eleves/{id}', [ElevesController::class, 'deleteEleves']);

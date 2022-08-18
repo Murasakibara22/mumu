@@ -65,9 +65,9 @@ class ParentController extends Controller
      * @param  \App\Models\Parents  $parents
      * @return \Illuminate\Http\Response
      */
-    public function show(Parents $parents)
+    public function show(Parents $id)
     {
-        $parent = Parents::find($parents);
+        $parent = Parents::find($id);
 
         return [
             'parent' => $parent
@@ -85,26 +85,25 @@ class ParentController extends Controller
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Parents  $parents
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Parents $parents)
-    {
-        //
+
+
+    public function deleteParents($id){
+        $parents = Parents::find($id);
+
+        $parents->delete();
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Parents  $parents
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Parents $parents)
-    {
-        //
+
+    
+    public function updateParents(Request $request, $id){
+        $parent = Parents::find($id);
+        $parent->nom  = $request->nom;
+        $parent->prenom  = $request->prenom;
+        $parent->genre  = $request->genre;
+        $parent->email  = $request->email;
+        $parent->contact  = $request->contact;
+        $parent->code_parent  = $request->code_parent;
+
+        $parent->update();
     }
 }

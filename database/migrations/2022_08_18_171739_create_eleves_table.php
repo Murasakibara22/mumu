@@ -26,8 +26,7 @@ class CreateElevesTable extends Migration
             $table->string('code_eleve');
             $table->Integer('etablissement_id')->unsigned();
             $table->foreign('etablissement_id')->references('id')->on('etablissements')->onDelete('cascade'); 
-            $table->Integer('AnneeAcademique')->unsigned();
-            $table->foreign('AnneeAcademique')->references('id')->on('AnneeAcademique')->onDelete('cascade'); 
+            $table->String('AnneeAcademique'); 
             $table->Integer('classe_id')->unsigned();
             $table->foreign('classe_id')->references('id')->on('classe_id')->onDelete('cascade'); 
             $table->timestamps();
