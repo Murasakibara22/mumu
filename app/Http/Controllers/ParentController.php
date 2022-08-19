@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Parents;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Foundation\Auth\Parents;
 
 class ParentController extends Controller
 {
@@ -57,6 +59,13 @@ class ParentController extends Controller
             $parent->code_parent  = $request->code_parent;
     
             $parent->save();
+
+            $token = $parent->createToken('auth_token')->plainTextToken;
+
+            return response()->json([
+                        'access_token' => $token,
+                            'token_type' => 'Bearer',
+            ]);
     }
 
     /**
@@ -105,5 +114,31 @@ class ParentController extends Controller
         $parent->code_parent  = $request->code_parent;
 
         $parent->update();
+    }
+
+
+
+    
+    public function login(Request $request)
+    {
+        if (!Auth::attempt($request->only('email', 'code_parent'))) {
+        return response()->json([
+        'message' => 'Invalid login details'
+                ], 401);
+            }
+
+        $parent = Parents::where('email', $request['email'])->firstOrFail();
+
+        $token = $parent->createToken('auth_token')->plainTextToken;
+
+        return response()->json([
+                'access_token' => $token,
+                'token_type' => 'Bearer',
+        ]);
+    }
+
+    public function me(Request $request)
+    {
+    return $request->parent();
     }
 }
