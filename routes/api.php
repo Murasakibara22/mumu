@@ -30,6 +30,7 @@ Route::put('/parents/{id}',[ParentController::class, 'updateParents']);
 Route::delete('/parents/{id}',[ParentController::class, 'deleteParents']);
 
 
+
 Route::post('/eleves', [ElevesController::class, 'newEleve']);
 Route::get('/eleves', [ElevesController::class, 'listAll']);
 Route::get('/eleves/{id}', [ElevesController::class, 'listOne']);
