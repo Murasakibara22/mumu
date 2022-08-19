@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Eleves;
 use Illuminate\Http\Request;
 
 class ElevesController extends Controller
@@ -19,8 +20,7 @@ class ElevesController extends Controller
         $eleve->contact = $request->contact;	
         $eleve->matricule = $request->matricule;	
         $eleve->code_eleve = $request->code_eleve;	
-        $eleve->AnneeAcademique = $request->AnneeAcademique;	
-        $eleve->etablissemnent_id = $request->etablissemnent_id;	
+        $eleve->AnneeAcademique = $request->AnneeAcademique;		
         $eleve->classe_id = $request->classe_id;	
  
         $eleve->save();
@@ -55,8 +55,7 @@ class ElevesController extends Controller
         $eleve->contact = $request->contact;	
         $eleve->matricule = $request->matricule;	
         $eleve->code_eleve = $request->code_eleve;	
-        $eleve->AnneeAcademique = $request->AnneeAcademique;
-        $eleve->etablissemnent_id = $request->etablissemnent_id;	
+        $eleve->AnneeAcademique = $request->AnneeAcademique;	
         $eleve->classe_id = $request->classe_id;
  
         $eleve ->update();

@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ElevesController;
 use App\Http\Controllers\ParentController;
 
 /*
