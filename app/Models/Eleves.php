@@ -31,8 +31,8 @@ class Eleves extends Model
     ];
 
 
-    public function eleve(){
-        return $this->belongsTo(Etablissement::class);
+    public function etablissement(){
+        return $this->belongsTo(Etablissement::class, 'etablissement_id');
     }
 
     public function classe(){

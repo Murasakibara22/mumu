@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Parents;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Foundation\Auth\Parents;
 
 class ParentController extends Controller
 {
@@ -57,6 +59,13 @@ class ParentController extends Controller
             $parent->code_parent  = $request->code_parent;
     
             $parent->save();
+
+            $token = $parent->createToken('auth_token')->plainTextToken;
+
+            return response()->json([
+                        'access_token' => $token,
+                            'token_type' => 'Bearer',
+            ]);
     }
 
     /**
@@ -65,9 +74,9 @@ class ParentController extends Controller
      * @param  \App\Models\Parents  $parents
      * @return \Illuminate\Http\Response
      */
-    public function show(Parents $parents)
+    public function show(Parents $id)
     {
-        $parent = Parents::find($parents);
+        $parent = Parents::find($id);
 
         return [
             'parent' => $parent
@@ -85,26 +94,51 @@ class ParentController extends Controller
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Parents  $parents
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Parents $parents)
-    {
-        //
+
+
+    public function deleteParents($id){
+        $parents = Parents::find($id);
+
+        $parents->delete();
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Parents  $parents
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Parents $parents)
+
+    
+    public function updateParents(Request $request, $id){
+        $parent = Parents::find($id);
+        $parent->nom  = $request->nom;
+        $parent->prenom  = $request->prenom;
+        $parent->genre  = $request->genre;
+        $parent->email  = $request->email;
+        $parent->contact  = $request->contact;
+        $parent->code_parent  = $request->code_parent;
+
+        $parent->update();
+    }
+
+
+
+    
+    public function login(Request $request)
     {
-        //
+        if (!Auth::attempt($request->only('email', 'code_parent'))) {
+        return response()->json([
+        'message' => 'Invalid login details'
+                ], 401);
+            }
+
+        $parent = Parents::where('email', $request['email'])->firstOrFail();
+
+        $token = $parent->createToken('auth_token')->plainTextToken;
+
+        return response()->json([
+                'access_token' => $token,
+                'token_type' => 'Bearer',
+        ]);
+    }
+
+    public function me(Request $request)
+    {
+    return $request->parent();
     }
 }

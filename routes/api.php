@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ElevesController;
 use App\Http\Controllers\ParentController;
 
 /*
@@ -20,5 +22,22 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('/parents', [ParentController::class, 'store']);
-Route::get('/parents', [ParentsController::class, 'index']);
-Route::get('/parents/{id}', [ParentsController::class, 'show']);
+Route::get('/parents', [ParentController::class, 'index']);
+Route::post('/parentme', [ParentController::class, 'me'])->middleware('auth:sanctum');
+Route::post('/parentLog', [ParentController::class, 'login']);
+Route::get('/parents/{id}', [ParentController::class, 'show']);
+Route::put('/parents/{id}',[ParentController::class, 'updateParents']);
+Route::delete('/parents/{id}',[ParentController::class, 'deleteParents']);
+
+
+
+Route::post('/eleves', [ElevesController::class, 'newEleve']);
+Route::get('/eleves', [ElevesController::class, 'listAll']);
+Route::get('/eleves/{id}', [ElevesController::class, 'listOne']);
+Route::put('/eleves/{id}', [ElevesController::class, 'updateEleves']);
+Route::delete('/eleves/{id}', [ElevesController::class, 'deleteEleves']);
+
+
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/me', [AuthController::class, 'me'])->middleware('auth:sanctum');
